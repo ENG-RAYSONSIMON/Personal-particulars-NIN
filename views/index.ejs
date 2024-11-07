@@ -1,0 +1,115 @@
+
+<%- include("Partials/header.ejs");-%>
+
+  <h4 class="my-2">Generate Your National Identification Number Here</h4>
+  <p>
+    Please Click the >> Add Info button to Enter your personal particulars.
+  </p>
+  <div class="form-inline">
+    <button class="btn btn-outline-primary btn-sm">
+      <a href="/add" class="text-decoration-none">>>Add Info</a>
+    </button>
+  </div>
+  <p>
+    Search your Name in this table below and and Click Generate button to
+    generate your NIN
+  </p>
+
+  <table class="table table-striped-columns table-bordered border-primary">
+    <thead>
+      <tr>
+        <th scope="col">Firstname</th>
+        <th scope="col">Secondname</th>
+        <th scope="col">Lastname</th>
+        <th scope="col">Date Of Birth</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Street Address</th>
+        <th scope="col">City/Region</th>
+        <th scope="col">Actions..</th>
+      </tr>
+    </thead>
+
+
+    <!-- for each loop comes here -->
+
+
+    <tbody>
+      <% persons.forEach(function(person){ %>
+        <tr>
+          <td>
+            <%= person.firstname %>
+          </td>
+          <td>
+            <%= person.secondname %>
+          </td>
+          <td>
+            <%= person.lastname %>
+          </td>
+          <td>
+            <%= formatter.formatDate(person.birthdate); %>
+          </td>
+          <td>
+            <%= person.gender %>
+          </td>
+          <td>
+            <%= person.address %>
+          </td>
+          <td>
+            <%= person.city %>
+          </td>
+          <td>
+            <div class="btn-group">
+              <button class="btn btn-outline-primary btn-sm me-1 ">
+                <a href="/edit/<%= person._id %>" class="text-decoration-none">Edit</a>
+              </button>
+              <!-- delete form  -->
+              <form action="/delete/<%= person._id %>" method="post">
+                <button class="btn btn-outline-danger btn-sm me-1" type="submit">Delete</button>
+              </form>
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">National Identification Number:</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <!-- <p>Dear NAME your national identification number is:</p> -->
+                      <h5 class="my-3" style="font-family: monospace;">
+
+                       <!-- NIN Number Comes Here. -->
+
+                      <%  persons.forEach(function(person){ %>
+
+                    
+
+                          <%= person._id %> Is for <span><%= person.firstname %></span>
+                   
+
+
+                       <% }) %>
+                      </h5>
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- modal ended up closing div  -->
+               <!-- Button trigger modal -->
+              <button type="" class="btn btn-success btn-sm me-1" data-bs-toggle="modal" data-bs-target="#exampleModal">Generate </button>
+            </div>
+          </td>
+        </tr>
+
+        <% }); %>
+
+    </tbody>
+  </table>
+  </div>
+
+  <%- include("Partials/footer.ejs"); -%>
